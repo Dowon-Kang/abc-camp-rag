@@ -2,7 +2,6 @@ import os
 
 import chromadb
 import torch
-from dotenv import load_dotenv
 from groq import Groq
 from transformers import AutoTokenizer, AutoModel
 
@@ -11,7 +10,20 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
 DB_PATH = os.path.join(DATA_DIR, "chroma_db")
 COLLECTION_NAME = "yes24_books"
 
-load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+
+def _get_groq_api_key():
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
+            return st.secrets["GROQ_API_KEY"]
+    except Exception:
+        pass
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+    except Exception:
+        pass
+    return os.getenv("GROQ_API_KEY")
 
 
 class BookChatbot:
@@ -21,7 +33,7 @@ class BookChatbot:
         self.tokenizer = AutoTokenizer.from_pretrained("klue/bert-base")
         self.model = AutoModel.from_pretrained("klue/bert-base")
 
-        api_key = os.getenv("GROQ_API_KEY")
+        api_key = _get_groq_api_key()
         if not api_key or api_key == "your_groq_api_key_here":
             self.groq_client = None
         else:

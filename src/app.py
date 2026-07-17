@@ -246,7 +246,7 @@ def page_chatbot(df):
         return
 
     if chatbot.groq_client is None:
-        st.info("Groq API 키가 설정되지 않았습니다. `.env` 파일에 `GROQ_API_KEY`를 설정하면 AI 응답을 생성합니다. 미설정 시 검색 결과만 표시됩니다.")
+        st.info("Groq API 키가 설정되지 않았습니다. Streamlit Cloud Secrets 또는 `.env` 파일에 `GROQ_API_KEY`를 설정하면 AI 응답을 생성합니다.")
 
     for message in st.session_state.chat_history:
         with st.chat_message(message["role"]):
@@ -274,7 +274,8 @@ def page_chatbot(df):
         - 2026년 신간 도서
 
         **설정:**
-        - `.env` 파일에 `GROQ_API_KEY` 설정 시 AI 응답 생성
+        - Streamlit Cloud Secrets에 `GROQ_API_KEY` 설정 (권장)
+        - 또는 `.env` 파일에 `GROQ_API_KEY` 설정
         - 미설정 시 검색 결과만 표시
         """)
 
