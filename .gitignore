@@ -1,0 +1,22 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+chroma_db/
+node_modules/
+
+# Office 문서 (Excel, PowerPoint, Word)
+*.xlsx
+*.xls
+*.pptx
+*.ppt
+*.docx
+*.doc
+*.pdf
+
+# 로그/임시 파일
+*.log
+*.tmp
+
+# opencode 시스템 파일
+.agents/
